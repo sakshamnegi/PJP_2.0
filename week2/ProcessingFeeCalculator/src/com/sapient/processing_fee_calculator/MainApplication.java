@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.sapient.processing_fee_calculator.models.PriorityFlag;
 import com.sapient.processing_fee_calculator.models.Transaction;
@@ -15,8 +16,6 @@ import com.sapient.processing_fee_calculator.services.RecordsReader;
 import com.sapient.processing_fee_calculator.services.ReportGenerator;
 
 public class MainApplication {
-
-	private static List<Transaction> transactions;
 
 	// can be autowired with Spring
 	private static RecordsReader recordsReader;
@@ -30,25 +29,27 @@ public class MainApplication {
 	// needs input and output file names as parameters from command line
 	public static void main(String[] args) {
 
+
 		String inputFilename = "SampleTransactions.csv";
 		String outputFilename = "Report.csv";
 
-		readTransactions(inputFilename);
+		List<Transaction> transactions = readTransactions(inputFilename);
 
-		processTransactions();
+		List<Transaction> processedTransactions = processTransactions(transactions);
 
-		generateTransactionReport(outputFilename);
+		generateTransactionReport(processedTransactions, outputFilename);
 	}
 
-	public static void readTransactions(String inputFilename) {
+	public static List<Transaction> readTransactions(String inputFilename) {
 
-		transactions = recordsReader.readRecords(inputFilename);
+		return recordsReader.readRecords(inputFilename);
 	}
 
-	public static void processTransactions() {
+	public static List<Transaction> processTransactions(List<Transaction> transactions) {
 
+		List<Transaction> list = transactions.stream().collect(Collectors.toList());
 		// Normal Transactions
-		for (Transaction t : transactions) {
+		for (Transaction t : list) {
 			if (t.getPriorityFlag() == PriorityFlag.Y) {
 				t.setProcessingFee(500);
 			} else {
@@ -89,14 +90,14 @@ public class MainApplication {
 			}
 		};
 		
-		Collections.sort(transactions, intraDayComparater);
+		Collections.sort(list, intraDayComparater);
 		// System.out.println("AFTER+++++++++++++");
 		// System.out.println(transactions);
-		
+		return list;
 
 	}
 
-	public static void generateTransactionReport(String outputFilename) {
+	public static void generateTransactionReport(List<Transaction> transactions, String outputFilename) {
 
 		reportGenerator.generateReport(transactions, outputFilename);
 
