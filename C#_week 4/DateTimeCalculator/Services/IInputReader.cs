@@ -5,7 +5,9 @@ namespace DateTimeCalculator.Services
 {
     public interface IInputReader
     {
-        List<InputEntity> readInput();
+        List<InputEntity> ReadMultipleInputs();
+
+        InputEntity ReadSingleInput();
 
     }
 }

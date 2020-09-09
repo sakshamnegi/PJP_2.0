@@ -1,20 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DateTimeCalculator.Models
 {
     public class OutputEntity
     {
-        public DateTime Date { get; set; }
-        public int[] Params { get; set; }
+        public int Id { get; set; }
 
+        public string Timestamp { get; set; }
+        public DateTime Date { get; set; }
+        public string TimeParams { get; set; }
+
+        [Column(TypeName = "varchar(25)")]
         public DateOperation Operation { get; set; }
 
         public string Result { get; set; }
 
-        public OutputEntity(DateTime date, int[] param, DateOperation operation, string result)
+        public OutputEntity(string timestamp, DateTime date, string timeParams, DateOperation operation, string result)
         {
+            this.Timestamp = timestamp;
             this.Date = date;
-            this.Params = param;
+            this.TimeParams = timeParams;
             this.Operation = operation;
             this.Result = result;
             

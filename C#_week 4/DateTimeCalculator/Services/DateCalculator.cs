@@ -11,7 +11,7 @@ namespace DateTimeCalculator.Services
             List<OutputEntity> list = new List<OutputEntity>();
             foreach(var ip in inputList)
             {
-                OutputEntity op = new OutputEntity(ip.Date, ip.Params, ip.Operation, null);
+                OutputEntity op = new OutputEntity(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), ip.Date, ip.TimeParams, ip.Operation,null);
                 switch (ip.Operation)
                 {
                     case DateOperation.ADD:
@@ -27,7 +27,7 @@ namespace DateTimeCalculator.Services
                         op.Result = WeekOfTheYear(ip);
                         break;
                     default:
-                        op.Result = "No/Invalid operation specified.";
+                        op.Result = "Error : No/Invalid operation specified.";
                         break;
                 }
                 list.Add(op);
@@ -36,18 +36,45 @@ namespace DateTimeCalculator.Services
             return list;
         }
         public string AddToDate(InputEntity ip)
-        {
-            DateTime date = ip.Date.AddDays(ip.Params[0] + ip.Params[1] * 7)
-                                       .AddMonths(ip.Params[2])
-                                       .AddYears(ip.Params[3]);
+        {   
+            string[] paramStr = ip.TimeParams.Split(" ");
+            int[] parameters = new int[4];
+            for(int i=0; i<4; i++)
+            {
+                if(int.TryParse(paramStr[i], out parameters[i]))
+                {
+
+                }
+                else
+                {
+                    return "Error : Parameters in invalid format.";
+                }
+            }
+            
+            DateTime date = ip.Date.AddDays(parameters[0] + parameters[1] * 7)
+                                       .AddMonths(parameters[2])
+                                       .AddYears(parameters[3]);
             return date.ToString("dd/MM/yyyy");
         }
 
         public string SubtractFromDate(InputEntity ip)
         {
-             DateTime date = ip.Date.AddDays(-1*ip.Params[0] - ip.Params[1] * 7)
-                                       .AddMonths(-ip.Params[2])
-                                       .AddYears(-ip.Params[3]);
+            string[] paramStr = ip.TimeParams.Split(" ");
+            int[] parameters = new int[4];
+            for(int i=0; i<4; i++)
+            {
+                if(int.TryParse(paramStr[i], out parameters[i]))
+                {
+
+                }
+                else
+                {
+                    return "Error : Parameters in invalid format.";
+                }
+            }
+             DateTime date = ip.Date.AddDays(-1*parameters[0] - parameters[1] * 7)
+                                       .AddMonths(-parameters[2])
+                                       .AddYears(-parameters[3]);
             return date.ToString("dd/MM/yyyy");
         }
 
