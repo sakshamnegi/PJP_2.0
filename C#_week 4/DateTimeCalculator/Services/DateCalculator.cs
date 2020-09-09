@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DateTimeCalculator.Models;
 
@@ -36,23 +37,48 @@ namespace DateTimeCalculator.Services
         }
         public string AddToDate(InputEntity ip)
         {
-            return "Added";
-        }
-
-
-        public string DayOfTheWeek(InputEntity ip)
-        {
-            return "Day of the week";
+            DateTime date = ip.Date.AddDays(ip.Params[0] + ip.Params[1] * 7)
+                                       .AddMonths(ip.Params[2])
+                                       .AddYears(ip.Params[3]);
+            return date.ToString("dd/MM/yyyy");
         }
 
         public string SubtractFromDate(InputEntity ip)
         {
-            return "Subtracted";
+             DateTime date = ip.Date.AddDays(-1*ip.Params[0] - ip.Params[1] * 7)
+                                       .AddMonths(-ip.Params[2])
+                                       .AddYears(-ip.Params[3]);
+            return date.ToString("dd/MM/yyyy");
         }
+
+        public string DayOfTheWeek(InputEntity ip)
+        {
+            return ip.Date.DayOfWeek.ToString();
+        }
+
 
         public string WeekOfTheYear(InputEntity ip)
         {
-            return "Week of the year";
+            DateTime tempDate = new DateTime(ip.Date.Year,1,1);
+            for (int i = 0; i < 7; i++) {
+                if ((int) tempDate.AddDays(-i).DayOfWeek == 1) {
+                    tempDate = tempDate.AddDays(-i);
+                    break;
+                }
+            }
+            TimeSpan timeSpan = ip.Date.Subtract(tempDate);
+            int daysSince = timeSpan.Days;
+            if (daysSince < 0) {
+                return "53";
+            }
+            if (daysSince == 0) {
+                return "1";
+            }
+
+            double res = Math.Ceiling(daysSince / 7.0);
+            return ((int) res).ToString();
+
+            
         }
     }
 
