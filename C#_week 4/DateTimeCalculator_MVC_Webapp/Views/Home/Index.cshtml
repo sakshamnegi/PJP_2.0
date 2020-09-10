@@ -1,0 +1,59 @@
+@model DateTimeCalculator_MVC_Webapp.Models.OperationModel
+
+@{
+    ViewData["Title"] = "Date Time Calculator";
+}
+
+<script>
+    function toggleParamDisplay(){
+        var opSelect = document.getElementById("operationSelect");
+        var value = opSelect.value;
+        if(value==0 || value==1)
+        {
+            document.getElementById("paramsArea").style.display = 'flex';
+        }
+        else if(value==2 || value==3)
+        {
+            document.getElementById("paramsArea").style.display = 'none';
+        }
+    }
+    
+    
+</script>
+
+<form asp-controller="Home" asp-action="Calculate">
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Date</span>
+  </div>
+  <input type="date" asp-for="Date" class="form-control" aria-describedby="basic-addon1" required="required">
+</div>
+
+
+
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="operationSelect">Operation</label>
+    </div>
+    <select asp-for="Operation" onchange="toggleParamDisplay()"  id="operationSelect" asp-items="Html.GetEnumSelectList<DateOperation>()"></select>
+    </div>
+
+    <div class="input-group mb-3" id="paramsArea" style="display: flex;" >
+        <span class="input-group-text" id="basic-addon1">Days</span>
+        <input type="number" min="0" asp-for="ParamDays" class="form-control" placeholder="0"/>
+        <span class="input-group-text" id="basic-addon1">Weeks</span>
+        <input type="number" min="0" asp-for="ParamWeeks" class="form-control" placeholder="0"/>
+        <span class="input-group-text" id="basic-addon1">Months</span>
+        <input type="number" min="0" asp-for="ParamMonths" class="form-control" placeholder="0"/>
+        <span class="input-group-text" id="basic-addon1">Years</span>
+        <input type="number" min="0" asp-for="ParamYears" class="form-control" placeholder="0"/>
+        
+    </div>
+
+    <div>
+       <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+
