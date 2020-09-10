@@ -34,7 +34,6 @@ D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\ne
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\DateTimeCalculator_MVC_Webapp.pdb
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\DateTimeCalculator_MVC_Webapp.genruntimeconfig.cache
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\DateTimeCalculator_MVC_Webapp.csproj.CopyComplete
-D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\Razor\Views\Result\Index.cshtml.g.cs
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
@@ -151,3 +150,4 @@ D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\bin\Debug\ne
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\Razor\Pages\_ValidationScriptsPartial.cshtml.g.cs
 D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+D:\Sapient_Learning\PJP_2.0\C#_week 4\DateTimeCalculator_MVC_Webapp\obj\Debug\netcoreapp3.1\Razor\Views\Result\Index.cshtml.g.cs

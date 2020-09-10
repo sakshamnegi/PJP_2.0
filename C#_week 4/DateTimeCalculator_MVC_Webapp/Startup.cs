@@ -26,10 +26,13 @@ namespace DateTimeCalculator_MVC_Webapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddDistributedMemoryCache();
+            // services.AddSession();
             services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddDbContext<CalculationsDbContext>(option=> option.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
             services.AddScoped<IRepository,CalculationsRepository>();
+            services.AddScoped<IDateCalculator, DateCalculator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +54,8 @@ namespace DateTimeCalculator_MVC_Webapp
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

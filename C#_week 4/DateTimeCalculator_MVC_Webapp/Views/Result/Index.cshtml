@@ -1,3 +1,60 @@
-<h2>@ViewBag.result</h2>
+@{
+    bool? showingResults = ViewBag.showingResults ?? false;
+    
+}
 
 <h3>Results </h3>
+
+@using (Html.BeginForm("GetResults", "Result"))
+{
+    <strong>Select Type :</strong><br>
+    @Html.RadioButton("ResultType","Session",true)<span>Session Results </span><br>
+    @Html.RadioButton("ResultType","All")<span>All Results </span>
+    <hr>
+    <strong>Filter by operation :</strong><br>
+    @Html.RadioButton("FilterType","All", true)<span>Show All </span><br>
+    @Html.RadioButton("FilterType","Add")<span>Add </span><br>
+    @Html.RadioButton("FilterType","Subtract")<span>Subtract </span><br>
+    @Html.RadioButton("FilterType","Day")<span>Day of the week </span><br>
+    @Html.RadioButton("FilterType","WeekNumber")<span>Week of the year </span>
+    <hr>
+    <div>
+       <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+
+}
+
+
+@if((bool) showingResults)
+{
+    <br>
+    <table class="table">
+        <thead class="thead-dark">   
+            <th>ID</th>  
+            <th>TimeStamp</th>  
+            <th>Date Operated On</th>  
+            <th>ParamDays</th>  
+            <th>ParamWeeks</th>  
+            <th>ParamMonths</th>  
+            <th>ParamYears</th>  
+            <th>Operation</th>  
+            <th>Result</th>  
+        </thead>
+
+        @foreach (var result in ViewBag.results as IEnumerable<OutputModel>)
+        {
+            <tr>
+                <td>@result.Id</td>
+                <td>@result.Timestamp</td>
+                <td>@result.Date.ToString("dd/MM/yyyy")</td>
+                <td>@result.ParamDays</td>
+                <td>@result.ParamWeeks</td>
+                <td>@result.ParamMonths</td>
+                <td>@result.ParamYears</td>
+                <td>@result.Operation</td>
+                <td>@result.Result</td>
+            </tr>
+        }
+    </table>
+}
