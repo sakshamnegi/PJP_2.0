@@ -1,74 +1,92 @@
 @model DateTimeCalculator_MVC_Webapp.Models.InputModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer _localizer
 
 @{
     ViewData["Title"] = "Date Time Calculator";
     string result = ViewBag.result;
+
 }
 
 <script>
-    window.onload = function(){
+    window.onload = function () {
         toggleParamDisplay();
     }
-    function toggleParamDisplay(){
+    function toggleParamDisplay() {
         var opSelect = document.getElementById("operationSelect");
         var value = opSelect.value;
-        if(value==0 || value==1)
-        {
+        if (value == 0 || value == 1) {
             document.getElementById("paramsArea").style.display = 'flex';
         }
-        else if(value==2 || value==3)
-        {
+        else if (value == 2 || value == 3) {
             document.getElementById("paramsArea").style.display = 'none';
         }
     }
-    
-    
+
+
 </script>
+
+@* Loading Partial view for language *@
+<div class="col-sm-10 text-right">
+    @await Html.PartialAsync("_ChooseLanguagePartial")
+</div>
+
+<div class="container">
+    <h3> @_localizer["Description"] </h3>
+
+    <hr />
+    <p> @_localizer["App Description"]</p>
+
+</div>
+<hr />
+
 
 <form asp-controller="Home" asp-action="Calculate" method="POST">
 
-<div class="input-group mb-3 col-lg-5">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">Date</span>
-  </div>
-  <input type="date" asp-for="Date" class="form-control" aria-describedby="basic-addon1" required>
-</div>
+    <div class="input-group mb-3 col-lg-5">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@_localizer["Date"]</span>
+        </div>
+        <input type="date" asp-for="Date" class="form-control" aria-describedby="basic-addon1" required>
+    </div>
 
 
 
     <div class="input-group mb-3 col-lg-5">
-    <div class="input-group-prepend">
-        <label class="input-group-text" for="operationSelect">Operation</label>
-    </div>
-    <select asp-for="Operation" onchange="toggleParamDisplay()" id="operationSelect" asp-items="Html.GetEnumSelectList<DateOperation>()"></select>
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="operationSelect">@_localizer["Operation"]</label>
+        </div>
+        <select asp-for="Operation" onchange="toggleParamDisplay()" id="operationSelect" asp-items="Html.GetEnumSelectList<DateOperation>()"></select>
     </div>
 
-    <div class="input-group mb-3 col-lg-10" id="paramsArea" style="display: flex;" >
-        <span class="input-group-text" id="basic-addon1">Days</span>
-        <input type="number" min="0" asp-for="ParamDays" class="form-control" placeholder="0"/>
-        <span class="input-group-text" id="basic-addon1">Weeks</span>
-        <input type="number" min="0" asp-for="ParamWeeks" class="form-control" placeholder="0"/>
-        <span class="input-group-text" id="basic-addon1">Months</span>
-        <input type="number" min="0" asp-for="ParamMonths" class="form-control" placeholder="0"/>
-        <span class="input-group-text" id="basic-addon1">Years</span>
-        <input type="number" min="0" asp-for="ParamYears" class="form-control" placeholder="0"/>
-        
+    <div class="input-group mb-3 col-lg-10" id="paramsArea" style="display: flex;">
+        <span class="input-group-text" id="basic-addon1">@_localizer["Days"]</span>
+        <input type="number" min="0" asp-for="ParamDays" class="form-control" placeholder="0" />
+        <span class="input-group-text" id="basic-addon1">@_localizer["Weeks"]</span>
+        <input type="number" min="0" asp-for="ParamWeeks" class="form-control" placeholder="0" />
+        <span class="input-group-text" id="basic-addon1">@_localizer["Months"]</span>
+        <input type="number" min="0" asp-for="ParamMonths" class="form-control" placeholder="0" />
+        <span class="input-group-text" id="basic-addon1">@_localizer["Years"]</span>
+        <input type="number" min="0" asp-for="ParamYears" class="form-control" placeholder="0" />
+
     </div>
 
     <div>
-       <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">@_localizer["Submit"]</button>
     </div>
 
-    
+
 
 </form>
 
+
+
 @if (!String.IsNullOrEmpty(result))
-    {
-        <hr>
-        <div>
-            <strong>Result : </strong> @ViewBag.result
-        </div>
-        <hr>
-    }
+{
+    <hr>
+    <div>
+        <strong>Result : </strong> @ViewBag.result
+    </div>
+    <hr>
+}
 

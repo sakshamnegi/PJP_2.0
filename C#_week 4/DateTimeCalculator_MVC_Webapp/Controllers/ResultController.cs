@@ -46,7 +46,7 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
             if(ResultType.Equals("Session"))
             {
                 string sessionID = HttpContext.Session.Id;
-                System.Console.WriteLine(sessionID);
+                _logger.LogInformation("Result SessionID "+ sessionID); ;
                 results = results.Where(o => o.SessionID.Equals(sessionID));
             }
             
