@@ -42,22 +42,17 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
         }
         public IActionResult GetResults(string ResultType, string FilterType)
         {
-            List<OutputModel> results;
-
-            // if(ResultType.Equals("Session"))
-            // {
-            //     results=  _session.Get("calculations") as List<OutputModel>;
-
-            // }
-
-            
-            if(FilterType.Equals("All"))
+            IEnumerable<OutputModel> results = _calculationsRepository.GetCalculations();
+            if(ResultType.Equals("Session"))
             {
-                results = _calculationsRepository.GetCalculations().ToList();
+                string sessionID = HttpContext.Session.Id;
+                System.Console.WriteLine(sessionID);
+                results = results.Where(o => o.SessionID.Equals(sessionID));
             }
-            else
+            
+            if(!FilterType.Equals("All"))
             {
-                results = _calculationsRepository.GetCalculations().Where(o => o.Operation == _filterMap[FilterType]).ToList();
+                results = results.Where(o => o.Operation == _filterMap[FilterType]);
             }
             ViewBag.results = results;
             ViewBag.showingResults = true;

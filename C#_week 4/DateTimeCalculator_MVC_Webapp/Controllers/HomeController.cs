@@ -24,6 +24,7 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
             _logger = logger;
             _calculationsRepository = calculationsRepository;
             _dateCalculator = dateCalculator;
+            
             // _session = session;
         }
  
@@ -51,6 +52,8 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
         [HttpPost]
         public IActionResult Calculate(InputModel model)
         {
+            //adding random string to prevent session id from changing on each request
+            HttpContext.Session.SetString("temp", "tempstring");
             OutputModel output = new OutputModel(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
                                                     model.Date,
                                                     model.ParamDays,
@@ -59,6 +62,7 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
                                                     model.ParamYears,
                                                     model.Operation);
             output.Result = _dateCalculator.Calculate(model);
+            output.SessionID = HttpContext.Session.Id;
             _calculationsRepository.AddCalculation(output);
             TempData["result"] = output.Result;
             return RedirectToAction("Index");

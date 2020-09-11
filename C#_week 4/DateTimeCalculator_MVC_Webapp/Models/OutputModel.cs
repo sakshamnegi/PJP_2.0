@@ -7,6 +7,8 @@ namespace DateTimeCalculator_MVC_Webapp.Models
     {
         public int Id { get; set; }
 
+        public string SessionID { get; set; }
+
         public string Timestamp { get; set; }
         public DateTime Date { get; set; }
         

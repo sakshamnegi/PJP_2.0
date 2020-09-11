@@ -6,6 +6,7 @@ using DateTimeCalculator_MVC_Webapp.Data;
 using DateTimeCalculator_MVC_Webapp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,8 +27,8 @@ namespace DateTimeCalculator_MVC_Webapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDistributedMemoryCache();
-            // services.AddSession();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddDbContext<CalculationsDbContext>(option=> option.UseNpgsql(Configuration.GetConnectionString("PostgresConnectionString")));
@@ -55,7 +56,7 @@ namespace DateTimeCalculator_MVC_Webapp
 
             app.UseAuthorization();
 
-            // app.UseSession();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
