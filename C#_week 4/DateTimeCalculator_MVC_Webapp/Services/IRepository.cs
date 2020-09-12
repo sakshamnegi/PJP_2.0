@@ -5,8 +5,8 @@ namespace DateTimeCalculator_MVC_Webapp.Services
 {
     public interface IRepository
     {
-        IEnumerable<OutputModel> GetCalculations();
+        IEnumerable<PersistenceModel> GetCalculations();
 
-        void AddCalculation(OutputModel record);
+        void AddCalculation(PersistenceModel record);
     }
 }

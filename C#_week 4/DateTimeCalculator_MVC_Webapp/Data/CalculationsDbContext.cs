@@ -11,11 +11,11 @@ namespace DateTimeCalculator_MVC_Webapp.Data
         {
 
         }
-        public DbSet<OutputModel> Calculations { get; set; }
+        public DbSet<PersistenceModel> Calculations { get; set; }
 
         //auto increment Id 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
-    modelBuilder.Entity<OutputModel>()
+    modelBuilder.Entity<PersistenceModel>()
         .Property(o => o.Id)
         .ValueGeneratedOnAdd();
  }

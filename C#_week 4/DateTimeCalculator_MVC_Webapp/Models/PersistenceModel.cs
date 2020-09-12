@@ -3,8 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DateTimeCalculator_MVC_Webapp.Models
 {
-    public class OutputModel
+    public class PersistenceModel
     {
+        public int Id { get; set; }
+
+        public string SessionID { get; set; }
 
         public string Timestamp { get; set; }
         public DateTime Date { get; set; }
@@ -14,15 +17,16 @@ namespace DateTimeCalculator_MVC_Webapp.Models
         public int ParamMonths { get; set; }
         public int ParamYears { get; set; }
 
+        [Column(TypeName = "varchar(25)")]
         public DateOperation Operation { get; set; }
 
         public string Result { get; set; }
 
-        public OutputModel()
+        public PersistenceModel()
         {
             
         }
-        public OutputModel( string timestamp,DateTime date, int paramDays, int paramWeeks, int paramMonths, int paramYears, DateOperation operation, string result)
+        public PersistenceModel(string timestamp, DateTime date, int paramDays, int paramWeeks, int paramMonths, int paramYears, DateOperation operation)
         {
             this.Timestamp = timestamp;
             this.Date = date;
@@ -31,7 +35,6 @@ namespace DateTimeCalculator_MVC_Webapp.Models
             this.ParamMonths = paramMonths;
             this.ParamYears = paramYears;
             this.Operation = operation;
-            this.Result = result;
             
         }
     }

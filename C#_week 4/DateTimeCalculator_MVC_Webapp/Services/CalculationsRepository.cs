@@ -13,11 +13,11 @@ namespace DateTimeCalculator_MVC_Webapp.Services
             _CalculationsDbContext = CalculationsDbContext;
         }
 
-        public IEnumerable<OutputModel> GetCalculations()
+        public IEnumerable<PersistenceModel> GetCalculations()
         {
             return _CalculationsDbContext.Calculations;
         }
-        public void AddCalculation(OutputModel calculation)
+        public void AddCalculation(PersistenceModel calculation)
         {
             _CalculationsDbContext.Calculations.Add(calculation);
             _CalculationsDbContext.SaveChanges(true);

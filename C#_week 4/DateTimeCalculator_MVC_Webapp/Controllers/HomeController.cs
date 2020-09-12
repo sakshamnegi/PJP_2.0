@@ -75,7 +75,8 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
         {
             //adding random string to prevent session id from changing on each request
             HttpContext.Session.SetString("temp", "tempstring");
-            OutputModel output = new OutputModel(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
+
+            PersistenceModel output = new PersistenceModel(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
                                                     model.Date,
                                                     model.ParamDays,
                                                     model.ParamWeeks,

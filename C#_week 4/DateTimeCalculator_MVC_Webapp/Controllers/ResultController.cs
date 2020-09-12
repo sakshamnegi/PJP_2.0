@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using DateTimeCalculator_MVC_Webapp.Models;
 using DateTimeCalculator_MVC_Webapp.Services;
 using Microsoft.AspNetCore.Http;
+using System.Text;
 
 namespace DateTimeCalculator_MVC_Webapp.Controllers
 {
@@ -40,20 +41,9 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
             // }
             return View();
         }
-        public IActionResult GetResults(string ResultType, string FilterType)
+        public IActionResult GetResults(string resultType, string filterType)
         {
-            IEnumerable<OutputModel> results = _calculationsRepository.GetCalculations();
-            if(ResultType.Equals("Session"))
-            {
-                string sessionID = HttpContext.Session.Id;
-                _logger.LogInformation("Result SessionID "+ sessionID); ;
-                results = results.Where(o => o.SessionID.Equals(sessionID));
-            }
-            
-            if(!FilterType.Equals("All"))
-            {
-                results = results.Where(o => o.Operation == _filterMap[FilterType]);
-            }
+            IEnumerable<OutputModel> results = GetResultList(resultType, filterType);
             ViewBag.results = results;
             ViewBag.showingResults = true;
             return View("~/Views/Result/Index.cshtml");
@@ -61,10 +51,59 @@ namespace DateTimeCalculator_MVC_Webapp.Controllers
             // return RedirectToAction("Index");
         }
 
+
+        [HttpPost]
+        public FileResult Download(string resultType, string filterType)
+        {
+            IEnumerable<OutputModel> results = GetResultList(resultType, filterType);
+            
+
+            // the Column Names.
+            
+            //results.Insert(0, new string[] { "Date", "ParamDays", "ParamWeeks", "ParamMonths", "ParamYears", "Operation", "Result" });
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine( string.Join(", ", "Timestamp", "Input_Date", "ParamDays", "ParamWeeks", "ParamMonths",
+                                       "ParamYears", "Operation", "Result"));
+            
+            foreach(var result in results)
+            {
+                sb.AppendLine(string.Join(", ", result.Timestamp, result.Date.ToString("dd/MM/yyyy"), result.ParamDays,
+                                          result.ParamWeeks, result.ParamMonths, result.ParamYears,
+                                          result.Operation.ToString(), result.Result));
+            }
+            
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "DateTimeCalculator_"+ resultType + DateTime.Now.ToString("dd/MM/yyyy hh:MM:ss") +".csv");
+        }
+
+        private IEnumerable<OutputModel> GetResultList(string resultType, string filterType)
+        {
+            IEnumerable<OutputModel> results;
+            IEnumerable<PersistenceModel> dbResults = _calculationsRepository.GetCalculations();
+            if (resultType.Equals("Session"))
+            {
+                string sessionID = HttpContext.Session.Id;
+                _logger.LogInformation("Result SessionID " + sessionID); ;
+                dbResults = dbResults.Where(o => o.SessionID.Equals(sessionID));
+            }
+
+            if (!filterType.Equals("All"))
+            {
+                dbResults = dbResults.Where(o => o.Operation == _filterMap[filterType]);
+            }
+
+            results = dbResults.Select(p => new OutputModel() { Timestamp=p.Timestamp, Date = p.Date, ParamDays = p.ParamDays, ParamWeeks = p.ParamWeeks, ParamMonths = p.ParamMonths, ParamYears = p.ParamYears, Operation = p.Operation, Result = p.Result });
+
+            return results;
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        
     }
 }
