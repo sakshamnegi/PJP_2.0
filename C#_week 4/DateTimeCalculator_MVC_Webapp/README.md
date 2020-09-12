@@ -42,6 +42,14 @@ Date Time Calculator web application using *Asp.Net MVC* to perform operations o
 
 * * *
 
+### Download Results 
+
+* Download results as *CSV* file
+	 
+![title](demo/download.gif)
+
+* * *
+
 ### Multiple Language Support  
 
 * Support for l10n and i18n
